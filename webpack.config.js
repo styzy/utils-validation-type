@@ -1,6 +1,7 @@
 const path = require('path')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const webpackConfig = {
     entry: {
@@ -8,9 +9,7 @@ const webpackConfig = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: (chunkData) => {
-            return `${chunkData.chunk.name}.bundle.js`
-        }
+        filename: `[name].bundle.js`
     },
     module: {
         rules: [{
@@ -24,13 +23,19 @@ const webpackConfig = {
             {
                 test: /\.css$/,
                 use: [
-                    { loader: 'style-loader', options: { sourceMap: true } },
-                    { loader: 'css-loader' }
+                    { loader: MiniCssExtractPlugin.loader },
+                    { loader: 'css-loader' },
+                    { loader: 'postcss-loader' }
                 ]
             },
             {
-                test: /\.stylus$/,
-                loader: 'style-loader!css-loader!stylus-loader',
+                test: /\.styl$/,
+                use: [
+                    { loader: MiniCssExtractPlugin.loader },
+                    { loader: 'css-loader' },
+                    { loader: 'postcss-loader' },
+                    { loader: 'stylus-loader' }
+                ]
             },
             {
                 test: /\.(gif|jpg|jpeg|png|svg|ttf)$/,
@@ -43,15 +48,16 @@ const webpackConfig = {
     },
     plugins: [
         new UglifyJSPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].bundle.css',
+            chunkFilename: '[id].css',
+            ignoreOrder: false, // Enable to remove warnings about conflicting order
+        }),
         new HtmlWebpackPlugin({
             title: 'es7-cli',
             template: 'index.html',
             hash: true,
-            // filename: './dist/index.html',
-            minify: {
-                removeComments: true, // 去除注释
-                collapseWhitespace: true //是否去除空格
-            }
+            minify: true
         })
     ]
 }
