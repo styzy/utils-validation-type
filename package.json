@@ -1,6 +1,13 @@
 {
-    "name": "es7-project",
-    "description": "es7-project",
+    "name": "@styzy/utils-validation-type",
+    "version": "0.0.1",
+    "description": "A Type Validation Tool",
+    "author": {
+        "name": "STYZY",
+        "email": "styzyreal@126.com",
+        "url": "https://our.styzy.cn"
+    },
+    "main": "dist/utils-validation-type.js",
     "scripts": {
         "dev": "webpack-dev-server --mode=development --open --hot",
         "build": "webpack --mode=production"

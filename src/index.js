@@ -1,8 +1,5 @@
-import indexCss from './index.styl'
-import hello from './hello'
+import validate from './validate'
 
-[1, 2, 3].map(item => {
-    document.write(`${item} ... <br>`)
-})
+export { validate as typeValidate }
 
-hello.sayHello()
+export default validate

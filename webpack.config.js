@@ -5,11 +5,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const webpackConfig = {
     entry: {
-        index: './src/index.js'
+        'utils-validation-type': './src/index.js'
     },
     output: {
+        library: 'utils',
+        libraryTarget: 'umd',
         path: path.resolve(__dirname, 'dist'),
-        filename: `[name].bundle.js`
+        filename: `[name].js`
     },
     module: {
         rules: [{
@@ -46,21 +48,24 @@ const webpackConfig = {
         ]
     },
     plugins: [
-        new UglifyJSPlugin(),
-        new MiniCssExtractPlugin({
-            filename: '[name].bundle.css',
-            chunkFilename: '[id].css',
-            ignoreOrder: false, // Enable to remove warnings about conflicting order
-        }),
-        new HtmlWebpackPlugin({
-            title: 'es7-cli',
-            template: 'index.html',
-            hash: true,
-            minify: true
-        })
+        // new UglifyJSPlugin(),
+        // new MiniCssExtractPlugin({
+        //     filename: '[name].bundle.css',
+        //     chunkFilename: '[id].css',
+        //     ignoreOrder: false, // Enable to remove warnings about conflicting order
+        // }),
+        // new HtmlWebpackPlugin({
+        //     title: 'es7-cli',
+        //     template: 'index.html',
+        //     hash: true,
+        //     minify: true
+        // })
     ]
 }
 
 module.exports = () => {
+    webpackConfig.optimization = {
+        minimize: false
+    }
     return webpackConfig
 }
