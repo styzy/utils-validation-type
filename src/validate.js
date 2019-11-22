@@ -1,3 +1,4 @@
+import isHTMLElement from './isHTMLElement'
 /**
  * 参数类型检查
  * @param {*} value 
@@ -11,7 +12,7 @@ const validate = function(value, types) {
         types = [types]
     }
     let valueType = ''
-    if (value instanceof HTMLElement) {
+    if (isHTMLElement(value)) {
         valueType = 'HTMLElement'
     } else {
         valueType = Object.prototype.toString.call(value).substr(8).replace(']', '')
